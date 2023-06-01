@@ -9,8 +9,9 @@ async function register(req, res) {
 
     // Kiểm tra xem người dùng đã tồn tại chưa
     const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(409).json({ message: 'Username already exists' });
+    const existingEmail = await User.findOne({ email });
+    if (existingUser || existingEmail) {
+      return res.status(200).json({ message: 'User already exists' });
     }
 
     // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
@@ -34,19 +35,19 @@ async function login(req, res) {
     // Tìm người dùng trong cơ sở dữ liệu
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(200).json({ status:"Error", message: 'Invalid username or password' });
     }
 
     // So sánh mật khẩu đã mã hóa với mật khẩu nhập vào
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(200).json({  status:"Error",message: 'Invalid username or password' });
     }
 
     // Tạo JWT với mã thông tin người dùng
     const token = jwt.sign({ username: user.username }, 'secret_key');
 
-    res.status(200).json({ token });
+    res.status(200).json({ status:"Success",token });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }

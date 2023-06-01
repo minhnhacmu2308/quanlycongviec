@@ -11,6 +11,9 @@ const projectSchema = new mongoose.Schema({
     img: {
         type: String,
         required: true,
+    },
+     username: {
+        type: String,
     }
 },{ timestamps: true });
 

@@ -8,8 +8,8 @@ router.post('/register', register);
 router.post('/login', login);
 router.post('/add-project',authenticateToken, add);
 router.get('/get-projects', authenticateToken,get);
-router.put('/update-project/:id',authenticateToken, update);
-router.delete('/delete-projects', authenticateToken,remove);
+router.put('/update-project',authenticateToken, update);
+router.get('/delete-projects', authenticateToken,remove);
 router.get('/get-project-by-id', authenticateToken,getById);
 
 module.exports = router;

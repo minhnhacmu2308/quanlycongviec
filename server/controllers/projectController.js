@@ -5,13 +5,16 @@ const jwt = require('jsonwebtoken');
 // Thêm sản phẩm mới
 async function add(req, res) {
   try {
+    console.log("s",req.user)
     const { title, dec, img } = req.body;
+      const { username} = req.user;
+
 
     // Tạo sản phẩm mới
-    const product = new Project({ title, dec, img });
+    const product = new Project({ title, dec, img ,username});
     await product.save();
 
-    res.status(201).json({ message: 'Product created successfully', product });
+    res.status(201).json({ message: 'Project created successfully', product });
   } catch (error) {
      console.log(error)
     res.status(500).json({ message: 'Internal server error' });
@@ -21,8 +24,9 @@ async function add(req, res) {
 // Lấy danh sách sản phẩm
 async function get(req, res){
   try {
+     const { username} = req.user;
     // Lấy tất cả sản phẩm từ cơ sở dữ liệu
-    const products = await Project.find();
+    const products = await Project.find({username});
 
     res.status(200).json(products);
   } catch (error) {
