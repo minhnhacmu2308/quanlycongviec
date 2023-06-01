@@ -43,7 +43,7 @@ async function getById(req, res) {
     const product = await Project.findById(productId);
 
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Project not found' });
     }
 
     res.status(200).json(product);
@@ -61,10 +61,10 @@ async function update(req, res){
     const updatedProduct = await Project.findByIdAndUpdate(productId, { title, dec, img }, { new: true });
 
     if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Project not found' });
     }
 
-    res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+    res.status(200).json({ message: 'Project updated successfully', product: updatedProduct });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
