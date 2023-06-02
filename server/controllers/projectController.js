@@ -5,13 +5,12 @@ const jwt = require('jsonwebtoken');
 // Thêm sản phẩm mới
 async function add(req, res) {
   try {
-    console.log("s",req.user)
-    const { title, dec, img } = req.body;
+    const { title, dec, img,status } = req.body;
       const { username} = req.user;
 
 
     // Tạo sản phẩm mới
-    const product = new Project({ title, dec, img ,username});
+    const product = new Project({ title, dec, img ,username,status});
     await product.save();
 
     res.status(201).json({ message: 'Project created successfully', product });
@@ -55,10 +54,10 @@ async function getById(req, res) {
 async function update(req, res){
   try {
     const productId = req.query.id;
-    const { title, dec, img } = req.body;
+    const { title, dec, img,status } = req.body;
 
     // Tìm sản phẩm theo ID và cập nhật thông tin
-    const updatedProduct = await Project.findByIdAndUpdate(productId, { title, dec, img }, { new: true });
+    const updatedProduct = await Project.findByIdAndUpdate(productId, { title, dec, img ,status}, { new: true });
 
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Project not found' });

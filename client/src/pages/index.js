@@ -19,7 +19,7 @@ const customStyles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    height:400,
+    height:480,
     bgcolor: 'background.paper',
     border: '2px solid #5D87FF',
     boxShadow: 24,
@@ -52,7 +52,12 @@ const Home = () => {
     const [token, setToken] = useState('');
     const [dec, setDec] = useState('');
     const [img, setImg] = useState('');
+    const [status,setStatus] = useState(false);
     const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    const handleSelectChange = (event) => {
+      setStatus(event.target.value);
+    };
 
     function openModal() {
       setIsOpen(true);
@@ -83,6 +88,7 @@ const Home = () => {
       setDec(value.dec)
       setImg(value.img)
       setTitle(value.title)
+      setStatus(value.status);
       openModal();
   }
     const resetState = () =>{
@@ -91,14 +97,15 @@ const Home = () => {
         setDec('')
         setImg('')
         setIdproject('')
+        setStatus(false);
     }
    const onCreate = async () => {
-        if(title === '' || dec === '' || img === ''){
+        if(title === '' || dec === '' || img === '' || status === null){
             toast.error("You need fill all information!");
         }else{
             try{
               if(isEdit){
-                axios.put(`http://localhost:8000/user/update-project/?id=${idProject}`, {title,dec,img}, {headers: {
+                axios.put(`http://localhost:8000/user/update-project/?id=${idProject}`, {title,dec,img,status}, {headers: {
                   'Authorization': `Bearer ${token}`
                 }})
                   .then(res => {
@@ -227,6 +234,13 @@ const Home = () => {
         <label for="exampleInputPassword1" class="form-label">Image:</label>
         <input type="text" class="form-control" id="exampleInputPassword1" value={img} onChange={(e) => setImg(e.target.value)} placeholder="Link image"/>
       </div>
+        <div class="mb-3">
+          <label for="disabledSelect" class="form-label">Status</label>
+          <select id="disabledSelect" value={status} onChange={handleSelectChange} class="form-select">
+            <option value={true}>Active</option>
+             <option value={false}>UnActive</option>
+          </select>
+        </div>
       <button  onClick={onCreate} class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Submit</button> 
       </Modal>
     <Menu/>
@@ -269,7 +283,8 @@ const Home = () => {
                     <div className="d-flex align-items-center justify-content-between">
                      <p>{value.dec}</p>
                     </div>
-                </div>
+                    {value.status ? <p style={{fontWeight:'bold',color:'green'}}>Active</p>: <p style={{fontWeight:'bold',color:'red'}}>UnActive</p>} 
+                </div>             
                 </div>
             </div>
                 ))}
