@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
-import { useHistory ,Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 
 const Menu = () => {
   const history = useHistory();
+
+  // useEffect(() => {
+  //   // Kiểm tra xem đã có token trong localStorage hay chưa
+  //   const token = localStorage.getItem('token');
+  //   if (token != null)
+  //   {
+  //     const decoded = jwt.decode(token);
+  //     console.log('decoded', decoded)
+  //   }
+
+  // }, []);
   return (
-      <aside className="left-sidebar">
+    <aside className="left-sidebar">
       {/* Sidebar scroll*/}
       <div>
         <div className="brand-logo d-flex align-items-center justify-content-between">
@@ -41,9 +52,20 @@ const Menu = () => {
                 <span className="hide-menu">My Task</span>
               </Link>
             </li>
-           
+            <li className="sidebar-item">
+              <Link
+                className="sidebar-link"
+                to={"/management-user"}
+                aria-expanded="false"
+              >
+                <span>
+                  <i className="ti ti-layout-dashboard" />
+                </span>
+                <span className="hide-menu">Management User</span>
+              </Link>
+            </li>
           </ul>
-      
+
         </nav>
         {/* End Sidebar navigation */}
       </div>

@@ -1,20 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import LoginForm from './components/LoginForm.js'
-import { BrowserRouter, Route, Switch ,Redirect} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm.js'
 import Home from './pages/index.js';
+import User from './pages/user.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-   <BrowserRouter>
-   <ToastContainer/>
+    <BrowserRouter>
+      <ToastContainer />
       <Switch>
         <Route path="/" exact component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <PrivateRoute path="/home" component={Home} />
+        <PrivateRoute path="/management-user" component={User} />
       </Switch>
     </BrowserRouter>
   );
